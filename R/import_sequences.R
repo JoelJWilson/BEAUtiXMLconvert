@@ -7,9 +7,6 @@
 #' @export
 import_sequences <- function(file) {
     
-  ## Remove warnings
-  suppressWarnings(
-  
     ## Iport .fasta file ##
     import_fasta <- function(file) {
         
@@ -43,7 +40,7 @@ import_sequences <- function(file) {
         fasta_sequence <- rbind(fasta_sequence, sequence)
         
         # Combine seqences and ID to a data frame
-        fasta_data <- cbind.data.frame(names_fasta, fasta_sequence)
+        fasta_data <- suppressWarnings(cbind.data.frame(names_fasta, fasta_sequence))
         
         # Return data frame
         fasta_data
@@ -53,7 +50,7 @@ import_sequences <- function(file) {
     import_nex <- function(file) {
         
         # Read file and comvert to dataframe
-        dataframe <- as.data.frame(scan(file, character(),quiet = TRUE))
+        dataframe <- as.data.frame(scan(file, character(), quiet = TRUE))
         
         # Find where the sequences start
         start.line <- grep("matrix", dataframe[, 1], ignore.case = TRUE) + 1
@@ -80,7 +77,7 @@ import_sequences <- function(file) {
         }
         
         # Combine ID and sequences into a data frame
-        nex_data <- cbind.data.frame(name, sequence)
+        nex_data <- suppressWarnings(cbind.data.frame(name, sequence))
         
         # Return data frame
         nex_data
@@ -105,7 +102,7 @@ import_sequences <- function(file) {
         phy_sequence <- phy_data[((1:n.tax) * 2 + 2), 1]
         
         # Combine ID and sequences into a dataframe
-        phy_data <- cbind.data.frame(phy_names, phy_sequence)
+        phy_data <- suppressWarnings(cbind.data.frame(phy_names, phy_sequence))
         
         # Return dataframe
         phy_data
@@ -126,6 +123,6 @@ import_sequences <- function(file) {
             }
         }
     }
-  )
+    
     data
 }
