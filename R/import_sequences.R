@@ -7,6 +7,9 @@
 #' @export
 import_sequences <- function(file) {
     
+  ## Remove warnings
+  suppressWarnings(
+  
     ## Iport .fasta file ##
     import_fasta <- function(file) {
         
@@ -50,7 +53,7 @@ import_sequences <- function(file) {
     import_nex <- function(file) {
         
         # Read file and comvert to dataframe
-        dataframe <- as.data.frame(scan(file, character()))
+        dataframe <- as.data.frame(scan(file, character(),quiet = TRUE))
         
         # Find where the sequences start
         start.line <- grep("matrix", dataframe[, 1], ignore.case = TRUE) + 1
@@ -123,6 +126,6 @@ import_sequences <- function(file) {
             }
         }
     }
-    
+  )
     data
 }

@@ -49,7 +49,7 @@ convert_XML <- function(file, template, name) {
     newXMLNode("taxa", attrs = c(id = "TaxonSet.test", spec = "TaxonSet"), parent = template[["run"]][["state"]][["tree"]][["trait"]])
     newXMLNode("alignment", attrs = c(idref = "test"), parent = template[["run"]][["state"]][["tree"]][["trait"]][["taxa"]])
     
-    # Save the new XML file with a name 
+    # Save the new XML file with a name
     saveXML(template, name)
     
     # Print new XML file
