@@ -11,7 +11,7 @@ convert_XML(file, template, name)
 
 \item{template}{XML file to be used as a template}
 
-\item{name}{File name that the resulting XML file will be saved as}
+\item{name}{File name that the resulting XML file will be saved as.}
 }
 \description{
 Import sequences and place them in an XML file with the required settings

@@ -4,16 +4,31 @@
 #' 
 #' @param file Input file with ID and sequences. Accepts .nex, .fasta and .phy files
 #' @param template XML file to be used as a template
-#' @param name File name that the resulting XML file will be saved as
+#' @param name File name that the resulting XML file will be saved as.
 #' 
 #' @export
 convert_XML <- function(file, template, name) {
     
     # Import sequence data from specified file
-    data <- import_file(file)
+    data <- import_sequences(file)
     
     # Create a template XML file from specified file
     template <- template_XML(template)
+    
+    # Function to add sequences to an XML node
+    edit_Sequence <- function(sequence, ...) {
+        
+        args <- list(...)
+        id <- args[1]
+        taxon <- args[2]
+        totalcount <- args[3]
+        value <- args[4]
+        
+        xmlAttrs(sequence)["id"] <- id
+        xmlAttrs(sequence)["taxon"] <- taxon
+        xmlAttrs(sequence)["totalcount"] <- totalcount
+        xmlAttrs(sequence)["value"] <- value
+    }
     
     # add new sequences to template
     for (n in 1:(length(data[, 2]))) {
@@ -34,7 +49,7 @@ convert_XML <- function(file, template, name) {
     newXMLNode("taxa", attrs = c(id = "TaxonSet.test", spec = "TaxonSet"), parent = template[["run"]][["state"]][["tree"]][["trait"]])
     newXMLNode("alignment", attrs = c(idref = "test"), parent = template[["run"]][["state"]][["tree"]][["trait"]][["taxa"]])
     
-    # Save the new XML file with a name
+    # Save the new XML file with a name 
     saveXML(template, name)
     
     # Print new XML file
