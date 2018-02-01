@@ -62,7 +62,7 @@ import_sequences <- function(file) {
         l <- end.line - start.line
         
         # Find the number of sequences
-        n.tax <- type.convert(gsub(";", "", gsub("ntax=", "", dataframe[grep("ntax=", dataframe[, 1], ignore.case = TRUE), 
+        n.tax <- utils::type.convert(gsub(";", "", gsub("ntax=", "", dataframe[grep("ntax=", dataframe[, 1], ignore.case = TRUE), 
             ], ignore.case = TRUE)))
         
         # ID of the sequences
