@@ -4,14 +4,16 @@
 \alias{convert_XML}
 \title{Create BEAST XML file}
 \usage{
-convert_XML(file, template, name)
+convert_XML(file, template, name, loc = FALSE)
 }
 \arguments{
 \item{file}{Input file with ID and sequences. Accepts .nex, .fasta and .phy files}
 
-\item{template}{XML file to be used as a template}
+\item{template}{XML file to be used as a template.}
 
 \item{name}{File name that the resulting XML file will be saved as.}
+
+\item{loc}{File containing location data.}
 }
 \description{
 Import sequences and place them in an XML file with the required settings
