@@ -52,10 +52,22 @@ convert_XML <- function(file, template, name, loc = FALSE) {
 
     # Import location data
     if (loc != FALSE) {
+
+        # Read location data file
         loc_data <- utils::read.delim(loc)
+
+        # Paste location data in template XML file
         loc_text <- paste(loc_data[, 1], "=", loc[, 2], ",\n", sep = "", collapse = "")
         loc_text[length(loc_text)] <- gsub(",", "", loc_text[length(loc_text)])
         template[["run"]][["distribution"]][[2]][[2]][["data"]][["traitSet"]][["text"]] <- loc_text
+
+        # Edit XML attributes
+        loc_names <- unique(sort(loc_data[, 2]))
+        loc_count <- length(loc_names)
+        codeMap_attr <- paste(paste(loc_names, "=", 1:loc_count - 1, ",", collapse = "", sep = ""), "? =", paste(1:loc_count -
+            1, collapse = " "))
+        XML::xmlAttrs(template[["run"]][["distribution"]][[2]][[2]][["data"]][["userDataType"]])["codeMap"] <- codeMap_attr
+        XML::xmlAttrs(template[["run"]][["distribution"]][[2]][[2]][["data"]][["userDataType"]])["states"] <- loc_count
     }
 
     # Save the new XML file with a name
