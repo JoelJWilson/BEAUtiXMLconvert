@@ -16,9 +16,9 @@ convert_XML(file, template, name, loc = FALSE, chainLength = FALSE,
 
 \item{loc}{File containing location data.}
 
-\item{chainLength}{Integer determining the chainlength of the MCMC run. Defaults to length of template file}
+\item{chainLength}{Integer determining the chainlength of the MCMC run. Defaults to template file specifications.}
 
-\item{storeEvery}{Integer determining how often to store the results of the MCMC run. Defaults to template number}
+\item{storeEvery}{Integer determining how often to store the results of the MCMC run. Defaults to template file specifications.}
 }
 \description{
 Import sequences and place them in an XML file with the required settings
