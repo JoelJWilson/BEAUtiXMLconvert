@@ -10,5 +10,5 @@ import_sequences(file)
 \item{file}{Input file containing sequences. Accepts .nex, .fasta and .phy files}
 }
 \description{
-Imports a file containing ID and sequences
+Imports a file containing ID and sequences to a dataframe
 }

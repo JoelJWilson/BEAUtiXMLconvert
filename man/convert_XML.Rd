@@ -4,7 +4,8 @@
 \alias{convert_XML}
 \title{Create BEAST XML file}
 \usage{
-convert_XML(file, template, name, loc = FALSE)
+convert_XML(file, template, name, loc = FALSE, chainLength = FALSE,
+  storeEvery = FALSE)
 }
 \arguments{
 \item{file}{Input file with ID and sequences. Accepts .nex, .fasta and .phy files}
@@ -14,6 +15,10 @@ convert_XML(file, template, name, loc = FALSE)
 \item{name}{File name that the resulting XML file will be saved as.}
 
 \item{loc}{File containing location data.}
+
+\item{chainLength}{Integer determining the chainlength of the MCMC run. Defaults to length of template file}
+
+\item{storeEvery}{Integer determining how often to store the results of the MCMC run. Defaults to template number}
 }
 \description{
 Import sequences and place them in an XML file with the required settings
