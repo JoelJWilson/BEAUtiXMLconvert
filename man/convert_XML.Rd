@@ -14,7 +14,7 @@ convert_XML(file, template, name, loc = FALSE, chainLength = FALSE,
 
 \item{name}{File name that the resulting XML file will be saved as.}
 
-\item{loc}{File containing location data.}
+\item{loc}{Tab delimited file containing location data.}
 
 \item{chainLength}{Integer determining the chainlength of the MCMC run. Defaults to template file specifications.}
 

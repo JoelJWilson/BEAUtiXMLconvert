@@ -5,7 +5,7 @@
 #' @param file Input file with ID and sequences. Accepts .nex, .fasta and .phy files
 #' @param template XML file to be used as a template.
 #' @param name File name that the resulting XML file will be saved as.
-#' @param loc File containing location data.
+#' @param loc Tab delimited file containing location data.
 #' @param chainLength Integer determining the chainlength of the MCMC run. Defaults to template file specifications.
 #' @param storeEvery Integer determining how often to store the results of the MCMC run. Defaults to template file specifications.
 #'
@@ -20,10 +20,10 @@ convert_XML <- function(file, template, name, loc = FALSE, chainLength = FALSE, 
     XML_template <- XML::xmlRoot(XML_template)  #converts imported tree into a workable node
 
     data_attrs <- XML::xmlAttrs(XML_template[["data"]])  #attributes of the node 'data'
-    data <- XML::newXMLNode("data")  #creates new node
-    XML::xmlAttrs(data) <- data_attrs  #writes attributes to new node
+    data_node <- XML::newXMLNode("data")  #creates new node
+    XML::xmlAttrs(data_node) <- data_attrs  #writes attributes to new node
     XML::removeChildren(XML_template, "data")  #removes node 'data' and all sequences
-    XML::addChildren(XML_template, data, at = 0)  #adds new node
+    XML::addChildren(XML_template, data_node, at = 0)  #adds new node
 
     # Function to add sequences to an XML node
     edit_Sequence <- function(sequence, ...) {
@@ -50,7 +50,7 @@ convert_XML <- function(file, template, name, loc = FALSE, chainLength = FALSE, 
     # Paste dates in template XML file
     dates_text <- paste(data[, 1], "=", "0", ",\n", sep = "", collapse = "")
     dates_text[length(dates_text)] <- gsub(",", "", dates_text[length(dates_text)])
-    XML_template[["run"]][["stae"]][["tree"]][["trait"]][["text"]] <- dates_text
+    XML_template[["run"]][["state"]][["tree"]][["trait"]][["text"]] <- dates_text
 
     # Import location data
     if (loc != FALSE) {
@@ -73,7 +73,7 @@ convert_XML <- function(file, template, name, loc = FALSE, chainLength = FALSE, 
     }
     # change MCMC chainlength
     if (chainLength != FALSE) {
-        XML::xmlAttrs(XML_template[["run"]])["chanLength"] <- chainLength
+        XML::xmlAttrs(XML_template[["run"]])["chainLength"] <- chainLength
     }
     # Change store every
     if (storeEvery != FALSE) {
