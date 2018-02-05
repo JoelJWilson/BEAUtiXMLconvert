@@ -59,7 +59,7 @@ convert_XML <- function(file, template, name, loc = FALSE, chainLength = FALSE, 
         loc_data <- utils::read.delim(loc)
 
         # Paste location data in template XML file
-        loc_text <- paste(loc_data[, 1], "=", loc[, 2], ",\n", sep = "", collapse = "")
+        loc_text <- paste(loc_data[, 1], "=", loc_data[, 2], ",\n", sep = "", collapse = "")
         loc_text[length(loc_text)] <- gsub(",", "", loc_text[length(loc_text)])
         XML_template[["run"]][["distribution"]][[2]][[2]][["data"]][["traitSet"]][["text"]] <- loc_text
 
