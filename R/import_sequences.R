@@ -28,8 +28,7 @@ import_sequences <- function(file) {
         
         # Add sequences to list
         for (n in 1:(length(names_fasta) - 1)) {
-            sequence <- fasta_file[(grep(pattern = ">", x = fasta_file)[n] + 1):(grep(pattern = ">", x = fasta_file)[n + 
-                1] - 1)]
+            sequence <- fasta_file[(grep(pattern = ">", x = fasta_file)[n] + 1):(grep(pattern = ">", x = fasta_file)[n + 1] - 1)]
             sequence <- paste(sequence, collapse = "")
             
             fasta_sequence <- rbind(fasta_sequence, sequence)
@@ -62,8 +61,7 @@ import_sequences <- function(file) {
         l <- end.line - start.line
         
         # Find the number of sequences
-        n.tax <- utils::type.convert(gsub(";", "", gsub("ntax=", "", dataframe[grep("ntax=", dataframe[, 1], ignore.case = TRUE), 
-            ], ignore.case = TRUE)))
+        n.tax <- utils::type.convert(gsub(";", "", gsub("ntax=", "", dataframe[grep("ntax=", dataframe[, 1], ignore.case = TRUE), ], ignore.case = TRUE)))
         
         # ID of the sequences
         name <- dataframe[(1:(n.tax)) * 2 + start.line - 2, ]
@@ -71,8 +69,7 @@ import_sequences <- function(file) {
         # Create a list of all the sequences
         sequence <- list()
         for (n in 1:n.tax) {
-            sequence_ <- paste(dataframe[(1:((l + 1)/(2 * n.tax))) * 2 * n.tax - (2 * n.tax - start.line + 1 - 2 * 
-                n), ], collapse = "")
+            sequence_ <- paste(dataframe[(1:((l + 1)/(2 * n.tax))) * 2 * n.tax - (2 * n.tax - start.line + 1 - 2 * n), ], collapse = "")
             sequence <- rbind(sequence, sequence_)
         }
         
