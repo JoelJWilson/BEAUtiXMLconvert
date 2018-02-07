@@ -123,11 +123,11 @@ convert_XML <- function(file, template, name, dates = FALSE, loc = FALSE, chainL
     # Convert to character string
     XML_doc <- XML::toString.XMLNode(XML_template)
 
-    # Replace template name with new
-    XML_doc <- gsub(template_name, file_name, XML_doc)
+    # Change .trees output name
+    gsub("fileName=(.{,30})\\.trees", paste("fileName=\\\"", file_name,".trees", sep =""), XML_doc)
 
-    # Replace old aligment name with new
-    XML_doc <- gsub(alignment_name, file_name, XML_doc)
+    # Change .log output name
+    gsub("fileName=(.{,30})\\.log",paste("fileName=\\\"", file_name,".log", sep =""), XML_doc)
 
     ## Save file-----------------------------------------------------------------------------------------------------
     write(XML_doc, file = name)
