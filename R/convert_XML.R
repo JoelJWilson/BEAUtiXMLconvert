@@ -12,10 +12,10 @@
 #'
 #' @export
 convert_XML <- function(file, template, name, dates = FALSE, loc = FALSE, chainLength = FALSE, storeEvery = FALSE) {
-
+    
     # Import sequence data from specified file
     data <- import_sequences(file)
-
+    
     # Create a template XML file from specified file
     if (grepl("*.xml$", template, ignore.case = TRUE) == TRUE) {
         XML_template <- XML::xmlInternalTreeParse(template)  #imports xml into internal tree
@@ -28,47 +28,47 @@ convert_XML <- function(file, template, name, dates = FALSE, loc = FALSE, chainL
     XML::xmlAttrs(data_node) <- data_attrs  #writes attributes to new node
     XML::removeChildren(XML_template, "data")  #removes node 'data' and all sequences
     XML::addChildren(XML_template, data_node, at = 0)  #adds new node
-
+    
     # Function to add sequences to an XML node
     edit_Sequence <- function(sequence, ...) {
-
+        
         args <- list(...)
         id <- args[1]
         taxon <- args[2]
         totalcount <- args[3]
         value <- args[4]
-
+        
         XML::xmlAttrs(sequence)["id"] <- id
         XML::xmlAttrs(sequence)["taxon"] <- taxon
         XML::xmlAttrs(sequence)["totalcount"] <- totalcount
         XML::xmlAttrs(sequence)["value"] <- value
     }
-
+    
     # add new sequences to template
     for (n in 1:(length(data[, 2]))) {
         sequence <- XML::newXMLNode("sequence")
         edit_Sequence(sequence, paste("seq_", data[n, 1], sep = ""), paste(data[n, 1]), "4", paste(data[n, 2]))
         XML::addChildren(XML_template[["data"]], sequence)
     }
-
+    
     # Paste dates in template XML file
-
+    
     if (dates != FALSE) {
         if (mode(XML_template[["run"]][["state"]][["tree"]][["trait"]][["text"]]) != "NULL") {
             # Read date data file
             dates_data <- utils::read.delim(dates)
-
+            
             # Paste date data in template XML file
-            dates_text <- paste(dates_data[1:(length(dates_data[, 1]) - 1), 1], "=", dates_data[1:(length(dates_data[, 2]) - 1), 2], ",\n",
+            dates_text <- paste(dates_data[1:(length(dates_data[, 1]) - 1), 1], "=", dates_data[1:(length(dates_data[, 2]) - 1), 2], ",\n", 
                 sep = "", collapse = "")
-            dates_text <- paste(dates_text, paste(dates_data[length(dates_data[, 1]), 1], "=", dates_data[length(dates_data[, 2]), 2],
+            dates_text <- paste(dates_text, paste(dates_data[length(dates_data[, 1]), 1], "=", dates_data[length(dates_data[, 2]), 2], 
                 "\n", sep = "", collapse = ""), sep = "")
             XML_template[["run"]][["state"]][["tree"]][["trait"]][["text"]] <- dates_text
         } else {
             stop("Template XML does not allow date input")
         }
-
-
+        
+        
     } else {
         if (mode(XML_template[["run"]][["state"]][["tree"]][["trait"]][["text"]]) != "NULL") {
             dates_text <- paste(data[1:(length(data[, 1]) - 1), 1], "=", "0", ",\n", sep = "", collapse = "")
@@ -76,7 +76,7 @@ convert_XML <- function(file, template, name, dates = FALSE, loc = FALSE, chainL
             XML_template[["run"]][["state"]][["tree"]][["trait"]][["text"]] <- dates_text
         }
     }
-
+    
     # Import location data
     if (loc != FALSE) {
         if (mode(XML_template[["run"]][["distribution"]][[2]][[2]][["data"]][["traitSet"]][["text"]]) == "NULL") {
@@ -84,14 +84,14 @@ convert_XML <- function(file, template, name, dates = FALSE, loc = FALSE, chainL
         } else {
             # Read location data file
             loc_data <- utils::read.delim(loc)
-
+            
             # Paste location data in template XML file
-            loc_text <- paste(loc_data[1:(length(loc_data[, 1]) - 1), 1], "=", loc_data[1:(length(loc_data[, 2]) - 1), 2], ",\n", sep = "",
+            loc_text <- paste(loc_data[1:(length(loc_data[, 1]) - 1), 1], "=", loc_data[1:(length(loc_data[, 2]) - 1), 2], ",\n", sep = "", 
                 collapse = "")
-            loc_text <- paste(loc_text, paste(loc_data[length(loc_data[, 1]), 1], "=", loc_data[length(loc_data[, 2]), 2], "\n", sep = "",
+            loc_text <- paste(loc_text, paste(loc_data[length(loc_data[, 1]), 1], "=", loc_data[length(loc_data[, 2]), 2], "\n", sep = "", 
                 collapse = ""), sep = "")
             XML_template[["run"]][["distribution"]][[2]][[2]][["data"]][["traitSet"]][["text"]] <- loc_text
-
+            
             # Edit XML attributes
             loc_names <- unique(sort(loc_data[, 2]))
             loc_count <- length(loc_names)
@@ -108,28 +108,28 @@ convert_XML <- function(file, template, name, dates = FALSE, loc = FALSE, chainL
     if (storeEvery != FALSE) {
         XML::xmlAttrs(XML_template[["run"]][["state"]])["storeEvery"] <- as.integer(storeEvery)
     }
-
+    
     ## Replace Names-----------------------------------------------------------------------------------------------
-
+    
     # Extract the file name from the template
     template_name <- tools::file_path_sans_ext(gsub(".*/", "", template))
-
+    
     # Extract the alignment name from the template
     alignment_name <- XML::xmlAttrs(XML_template[["data"]])["id"]
-
+    
     # Extract file name from saved filepath
     file_name <- tools::file_path_sans_ext(gsub(".*/", "", name))
-
+    
     # Convert to character string
     XML_doc <- XML::toString.XMLNode(XML_template)
-
+    
     # Change .trees output name
-    gsub("fileName=(.{,30})\\.trees", paste("fileName=\\\"", file_name,".trees", sep =""), XML_doc)
-
+    XML_doc <- gsub("fileName=(.{,30})\\.trees", paste("fileName=\\\"", file_name, ".trees", sep = ""), XML_doc)
+    
     # Change .log output name
-    gsub("fileName=(.{,30})\\.log",paste("fileName=\\\"", file_name,".log", sep =""), XML_doc)
-
+    XML_doc <- gsub("fileName=(.{,30})\\.log", paste("fileName=\\\"", file_name, ".log", sep = ""), XML_doc)
+    
     ## Save file-----------------------------------------------------------------------------------------------------
     write(XML_doc, file = name)
-
+    
 }
