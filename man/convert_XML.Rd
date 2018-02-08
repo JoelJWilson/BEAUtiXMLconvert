@@ -4,11 +4,13 @@
 \alias{convert_XML}
 \title{Create BEAST XML file}
 \usage{
-convert_XML(file, template, name, dates = FALSE, loc = FALSE,
+convert_XML(file, datatype, template, name, dates = FALSE, loc = FALSE,
   chainLength = FALSE, storeEvery = FALSE)
 }
 \arguments{
 \item{file}{Input file with ID and sequences. Accepts .nex, .fasta and .phy files}
+
+\item{datatype}{Type of date in the sequence input file. Either "nucleotide", "aminoacid", or "binary".}
 
 \item{template}{XML file to be used as a template.}
 
@@ -23,5 +25,5 @@ convert_XML(file, template, name, dates = FALSE, loc = FALSE,
 \item{storeEvery}{Integer determining how often to store the state. Defaults to template file specifications.}
 }
 \description{
-Import sequences and place them in an XML file with the required settings
+Import sequences and places them in an XML file with the required settings
 }

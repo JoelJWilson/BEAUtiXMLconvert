@@ -1,8 +1,9 @@
 #' @title Create BEAST XML file
 #'
-#' @description Import sequences and place them in an XML file with the required settings
+#' @description Import sequences and places them in an XML file with the required settings
 #'
 #' @param file Input file with ID and sequences. Accepts .nex, .fasta and .phy files
+#' @param datatype Type of date in the sequence input file. Either 'nucleotide', 'aminoacid', or 'binary'.
 #' @param template XML file to be used as a template.
 #' @param name File name that the resulting XML file will be saved as.
 #' @param dates Tab delimited file containing tip date data. Date defaults to zero if none supplied
@@ -11,7 +12,7 @@
 #' @param storeEvery Integer determining how often to store the state. Defaults to template file specifications.
 #'
 #' @export
-convert_XML <- function(file, template, name, dates = FALSE, loc = FALSE, chainLength = FALSE, storeEvery = FALSE) {
+convert_XML <- function(file, datatype, template, name, dates = FALSE, loc = FALSE, chainLength = FALSE, storeEvery = FALSE) {
     
     # Import sequence data from specified file
     data <- import_sequences(file)
@@ -23,9 +24,13 @@ convert_XML <- function(file, template, name, dates = FALSE, loc = FALSE, chainL
     } else {
         stop("Template is not an XML file")
     }
+    
+    
+    
     data_attrs <- XML::xmlAttrs(XML_template[["data"]])  #attributes of the node 'data'
     data_node <- XML::newXMLNode("data")  #creates new node
     XML::xmlAttrs(data_node) <- data_attrs  #writes attributes to new node
+    XML::xmlAttrs(data_node)["dataType"] <- datatype
     XML::removeChildren(XML_template, "data")  #removes node 'data' and all sequences
     XML::addChildren(XML_template, data_node, at = 0)  #adds new node
     
@@ -44,10 +49,23 @@ convert_XML <- function(file, template, name, dates = FALSE, loc = FALSE, chainL
         XML::xmlAttrs(sequence)["value"] <- value
     }
     
+    if (datatype == "nucleotide") {
+        count <- 4
+    } else {
+        if (datatype == "aminoacid") {
+            count <- 20
+        } else {
+            if (datatype == "binary") {
+                count <- 2
+            } else {
+                stop("Invalid datatype")
+            }
+        }
+    }
     # add new sequences to template
     for (n in 1:(length(data[, 2]))) {
         sequence <- XML::newXMLNode("sequence")
-        edit_Sequence(sequence, paste("seq_", data[n, 1], sep = ""), paste(data[n, 1]), "4", paste(data[n, 2]))
+        edit_Sequence(sequence, paste("seq_", data[n, 1], sep = ""), paste(data[n, 1]), count, paste(data[n, 2]))
         XML::addChildren(XML_template[["data"]], sequence)
     }
     
