@@ -2,11 +2,14 @@ Package: BEAUtiXMLConvert
 Type: Package
 Title: Edit XML files produced by BEAUti
 Version: 0.1.0
-Author: Joel Wilson
-Maintainer: <joel.j.wilson@student.adelaide.edu.au>
-Description: More about what it does (maybe more than one line)
-    Use four spaces when indenting paragraphs within the Description.
-License: What license is it under?
+Authors@R: person("Joel", "Wilson", email = "joel.j.wilson@student.adelaide.edu.au", role = c("aut", "cre")
+Maintainer: Joel Wilson <joel.j.wilson@student.adelaide.edu.au>
+URL: https://github.com/JoelJWilson/BEAUtiXMLconvert
+BugReports: https://github.com/JoelJWilson/BEAUtiXMLconvert/issues
+Description: Create XML files to be used by BEAST using a template file produced
+    by BEAUti. Sequence alignments can then be imported from various source 
+    files into the template file with other data. 
+License: LGPL (>=2)
 Encoding: UTF-8
 LazyData: true
 RoxygenNote: 6.0.1
