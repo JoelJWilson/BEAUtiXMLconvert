@@ -4,11 +4,11 @@
 \alias{convert_XML}
 \title{Create BEAST XML file}
 \usage{
-convert_XML(file, datatype, template, name, dates = NULL, location = NULL,
+convert_XML(input, datatype, template, file, dates = NULL, location = NULL,
   chainLength = NULL, storeEvery = NULL)
 }
 \arguments{
-\item{file}{The name of the input file containing the alignment. Works with
+\item{input}{The name of the input file containing the alignment. Works with
 .nex, .fasta and .phy files}
 
 \item{datatype}{The type of data used in the alignment input file. Either
@@ -17,7 +17,7 @@ convert_XML(file, datatype, template, name, dates = NULL, location = NULL,
 \item{template}{The name of the BEAST input XML file to be used as a
 template. This file can be produced by BEAUti}
 
-\item{name}{The name of the file that the resulting XML file will be written
+\item{file}{The name of the file that the resulting XML file will be written
 to.}
 
 \item{dates}{The name of the tab delimited file containing tip date data.}
