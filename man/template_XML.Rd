@@ -2,13 +2,15 @@
 % Please edit documentation in R/template_XML.R
 \name{template_XML}
 \alias{template_XML}
-\title{Import template XML file}
+\title{Create template XML file}
 \usage{
-template_XML(file)
+template_XML(template, file)
 }
 \arguments{
-\item{file}{template XML file}
+\item{template}{Name of template XML file}
+
+\item{file}{Name of file to write output template XML file to}
 }
 \description{
-Take a template XML file and replace sequences and dates
+Take a template XML file and remove alignment data
 }
