@@ -2,7 +2,7 @@ Package: BEAUtiXMLConvert
 Type: Package
 Title: Edit XML files produced by BEAUti
 Version: 0.1.0
-Authors@R: person("Joel", "Wilson", email = "joel.j.wilson@student.adelaide.edu.au", role = c("aut", "cre")
+Authors@R: person("Joel", "Wilson", email = "joel.j.wilson@student.adelaide.edu.au", role = c("aut", "cre"))
 Maintainer: Joel Wilson <joel.j.wilson@student.adelaide.edu.au>
 URL: https://github.com/JoelJWilson/BEAUtiXMLconvert
 BugReports: https://github.com/JoelJWilson/BEAUtiXMLconvert/issues
