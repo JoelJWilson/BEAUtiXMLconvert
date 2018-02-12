@@ -7,8 +7,20 @@
 import_sequences(file)
 }
 \arguments{
-\item{file}{Input file containing sequences. Accepts .nex, .fasta and .phy files}
+\item{file}{The name of the input file containing the sequence alignment.
+Works with .nex, .fasta and .phy files.}
+}
+\value{
+A dataframe containing the sequence identifiers as the first column
+  and the sequence data in the second column.
 }
 \description{
-Imports a file containing ID and sequences to a dataframe
+Imports a file containing ID and sequences to a dataframe.
+}
+\details{
+Imports sequence alignment data from .nex, .fasta and .phy files.
+  .nex files are read from the line tagged as matrix until the first line
+  tagged as end. For this reason the word matrix must not appear anywhere
+  else in the file. .nex must be in the simple NEXUS format to be read
+  correctly.
 }
