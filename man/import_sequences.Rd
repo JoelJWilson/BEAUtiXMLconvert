@@ -17,10 +17,3 @@ A dataframe containing the sequence identifiers as the first column
 \description{
 Imports a file containing ID and sequences to a dataframe.
 }
-\details{
-Imports sequence alignment data from .nex, .fasta and .phy files.
-  .nex files are read from the line tagged as matrix until the first line
-  tagged as end. For this reason the word matrix must not appear anywhere
-  else in the file. .nex must be in the simple NEXUS format to be read
-  correctly.
-}
