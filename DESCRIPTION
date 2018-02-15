@@ -17,3 +17,8 @@ Imports:
     phylotools,
     utils,
     XML
+Suggests: 
+    BiocStyle,
+    knitr,
+    rmarkdown
+VignetteBuilder: knitr
