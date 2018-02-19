@@ -32,18 +32,18 @@ import_sequences <- function(file) {
             ], ignore.case = TRUE)))
         
         # ID of the sequences
-        name <- dataframe[(1:(n.tax)) * 2 + start.line - 2, ]
+        seq.name <- dataframe[(1:(n.tax)) * 2 + start.line - 2, ]
         
         # Create a list of all the sequences
-        sequence <- list()
+        seq.text <- list()
         for (n in 1:n.tax) {
-            sequence_ <- paste(dataframe[(1:((l + 1)/(2 * n.tax))) * 2 * n.tax - (2 * n.tax - start.line + 1 - 
-                2 * n), ], collapse = "")
-            sequence <- rbind(sequence, sequence_)
+            sequence <- paste(dataframe[(1:((l + 1)/(2 * n.tax))) * 2 * n.tax - (2 * n.tax - start.line + 1 - 2 * 
+                n), ], collapse = "")
+            seq.text <- rbind(seq.text, sequence)
         }
         
         # Combine ID and sequences into a data frame
-        nex_data <- suppressWarnings(cbind.data.frame(name, sequence))
+        nex_data <- suppressWarnings(cbind.data.frame(seq.name, seq.text))
         
         # Return data frame
         nex_data
@@ -73,7 +73,7 @@ import_sequences <- function(file) {
         }
     }
     
-    if (length(unique(nchar(data[, 2]))) != 1) 
+    if (length(unique(nchar(as.vector(data[, 2])))) != 1) 
         stop("Inconsistent sequence lengths")
     
     # remove apostrophes from names
