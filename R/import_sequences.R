@@ -79,5 +79,8 @@ import_sequences <- function(file) {
     # remove apostrophes from names
     data[, 1] <- gsub("'", "", data[, 1])
     
+    # remove NA from end of line
+    data[, 2] <- gsub("NA$", "", data[, 2])
+    
     data
 }
