@@ -9,57 +9,44 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
-```{r setup, include = FALSE}
-knitr::opts_chunk$set(
-  collapse = TRUE,
-  comment = "#>"
-)
+# Introduction
+
+The package `BEAUtiXMLConvert` is designed to produce XML files for use with the phylogenetic analysis tool [BEAST](http://www.beast2.org/). the package contains three functions: convert_XML, import_sequences and template_xml.
+
+# Usage
+## Main function
+The main function of this package is `convert_XML()`. This function provides the ability to import sequence alignments into a precreated XML file such as those produced by BEAUti.
+
+
+
+In its simplest form the function only requires a compatible XML file and a sequence alignment file. The function removes the alignment from the orginal XML file and replaces it with the alignment imported from the provided alignment file. The newly created XMl file is then saved at the specified location.
+
+The alignment in the XML file will have the following atrributes
+
+`ID` = sequence name with "seq_" as a prefix
+
+`taxon` = sequence name
+
+`totalcount` = 4 if nucleotide data, 20 if amino acid data, 2 if binary data
+
+`value` = sequence data
+
+`convert_XML()` also allows for tip dates and locations to be imported as parameters into the file. This requires a template XML file that contains location data that is then replaced 
+
+The data must be imported using the name of a tab delimited file containing the name of the sequence and the data.
+
+
+The MCMC chain length and the store every value can also be changed using the `chainLength` and `storeEvery` arguments.
+
+## Secondary functions
+
+The function `import_sequences()` is used to produce a dataframe of sequences and their names from a specified alignment file. This function is used in the convert_xml
+
+The function `template_XML()` produces an new file from the file specified. THis file has the original alignment and other references to the alignment, such as tip date and location information removed. This file is not compatible with the convert_XML function
+
+
+
+# Session info
+```{r sessionInfo, echo=FALSE}
+sessionInfo()
 ```
-
-Vignettes are long form documentation commonly included in packages. Because they are part of the distribution of the package, they need to be as compact as possible. The `html_vignette` output type provides a custom style sheet (and tweaks some options) to ensure that the resulting html is as small as possible. The `html_vignette` format:
-
-- Never uses retina figures
-- Has a smaller default figure size
-- Uses a custom CSS stylesheet instead of the default Twitter Bootstrap style
-
-## Vignette Info
-
-Note the various macros within the `vignette` section of the metadata block above. These are required in order to instruct R how to build the vignette. Note that you should change the `title` field and the `\VignetteIndexEntry` to match the title of your vignette.
-
-## Styles
-
-The `html_vignette` template includes a basic CSS theme. To override this theme you can specify your own CSS in the document metadata as follows:
-
-    output: 
-      rmarkdown::html_vignette:
-        css: mystyles.css
-
-## Figures
-
-The figure sizes have been customised so that you can easily put two images side-by-side. 
-
-```{r, fig.show='hold'}
-plot(1:10)
-plot(10:1)
-```
-
-You can enable figure captions by `fig_caption: yes` in YAML:
-
-    output:
-      rmarkdown::html_vignette:
-        fig_caption: yes
-
-Then you can use the chunk option `fig.cap = "Your figure caption."` in **knitr**.
-
-## More Examples
-
-You can write math expressions, e.g. $Y = X\beta + \epsilon$, footnotes^[A footnote here.], and tables, e.g. using `knitr::kable()`.
-
-```{r, echo=FALSE, results='asis'}
-knitr::kable(head(mtcars, 10))
-```
-
-Also a quote using `>`:
-
-> "He who gives up [code] safety for [code] speed deserves neither."
-([via](https://twitter.com/hadleywickham/status/504368538874703872))
