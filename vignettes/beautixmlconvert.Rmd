@@ -9,14 +9,20 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
 # Introduction
 
-The package `BEAUtiXMLConvert` is designed to produce XML files for use with the phylogenetic analysis tool [BEAST](http://www.beast2.org/). the package contains three functions: convert_XML, import_sequences and template_xml.
+The package `BEAUtiXMLConvert` is designed to produce XML files for use with the phylogenetic analysis tool [BEAST](http://www.beast2.org/). The package contains three functions: convert_XML, import_sequences and template_xml.
 
 # Usage
 ## Main function
 The main function of this package is `convert_XML()`. This function provides the ability to import sequence alignments into a precreated XML file such as those produced by BEAUti.
-
 
 
 In its simplest form the function only requires a compatible XML file and a sequence alignment file. The function removes the alignment from the orginal XML file and replaces it with the alignment imported from the provided alignment file. The newly created XMl file is then saved at the specified location.

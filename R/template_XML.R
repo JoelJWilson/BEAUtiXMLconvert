@@ -50,6 +50,7 @@ template_XML <- function(template, file) {
     # Change .log output name
     XML_doc <- gsub("fileName=(.{,30})\\.log", paste("fileName=\\\"", file_name, ".log", sep = ""), XML_doc)
     
-    ## Save file-----------------------------------------------------------------------------------------------------
+    ## Save
+    ## file-----------------------------------------------------------------------------------------------------
     write(XML_doc, file = file)
 }
